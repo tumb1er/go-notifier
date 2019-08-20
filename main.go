@@ -59,6 +59,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "notifier"
 	app.Usage = "listen for notifications"
+	app.HideVersion = true
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "address",
