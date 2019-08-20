@@ -44,3 +44,8 @@ go-notifier [address] [icon]
 --icon value     notification icon path (default: "icon.ico")
 
 ```
+
+Licensing
+---------
+
+This software is issued under [GPLv3](LICENSE) license because of using [github.com/esiqveland/notify](github.com/esiqveland/notify) library under Linux. However, Windows version does not use it and could be licensed under MIT/BSD.
