@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func watch(address string, icon string) error {
@@ -30,9 +31,11 @@ func watch(address string, icon string) error {
 
 	observer := new(notifier.SocketTransport)
 	c := make(chan os.Signal, 1)
+	running := true
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
 		<-c
+		running = false
 		// suppress unrelated log.Print in notifier.eventLoop
 		log.SetOutput(ioutil.Discard)
 		if err := observer.Stop(); err != nil {
@@ -40,11 +43,16 @@ func watch(address string, icon string) error {
 			log.Fatalf("stop error: %e", err)
 		}
 	}()
-	if err := observer.Observe(address, handle); err != nil {
-		return err
-	}
 
-	return nil
+	for {
+		if err := observer.Observe(address, handle); err != nil {
+			log.Printf("observe error: %v", err)
+			time.Sleep(time.Second)
+		}
+		if !running {
+			return nil
+		}
+	}
 }
 
 func main() {
