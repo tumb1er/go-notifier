@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/tumb1er/go-notifier/notifier"
 	"github.com/urfave/cli"
-	"go-notifier/notifier"
 	"io/ioutil"
 	"log"
 	"os"
@@ -31,8 +31,8 @@ func watch(address string, icon string) error {
 	observer := new(notifier.SocketTransport)
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
-	go func(){
-		<- c
+	go func() {
+		<-c
 		// suppress unrelated log.Print in notifier.eventLoop
 		log.SetOutput(ioutil.Discard)
 		if err := observer.Stop(); err != nil {
@@ -40,7 +40,7 @@ func watch(address string, icon string) error {
 			log.Fatalf("stop error: %e", err)
 		}
 	}()
-	if err:= observer.Observe(address, handle); err != nil{
+	if err := observer.Observe(address, handle); err != nil {
 		return err
 	}
 
@@ -51,14 +51,14 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "notifier"
 	app.Usage = "listen for notifications"
-	app.Flags = []cli.Flag {
+	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name: "address",
+			Name:  "address",
 			Value: "localhost:9998",
 			Usage: "tcp address for socket server",
 		},
 		cli.StringFlag{
-			Name: "icon",
+			Name:  "icon",
 			Value: "icon.ico",
 			Usage: "notification icon path",
 		},
