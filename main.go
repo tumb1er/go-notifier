@@ -81,7 +81,7 @@ func main() {
 		},
 	}
 	app.Action = func(c *cli.Context) error {
-		return watch(c.String("address"), c.String("icon"), c.String("bane"))
+		return watch(c.String("address"), c.String("icon"), c.String("name"))
 	}
 
 	err := app.Run(os.Args)
