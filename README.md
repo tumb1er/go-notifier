@@ -12,7 +12,7 @@ Example
 $> python3 server.py &
 
 # start notification listener
-$> go-notifier localhost:9999 icon.ico
+$> go-notifier --address localhost:9999 --icon icon.ico --name Notifier
 ```
 
 ![Ubuntu screenshot](screenshot-ubuntu.png)

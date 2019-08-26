@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/tumb1er/go-notifier/notifier"
 	"github.com/urfave/cli"
 	"io/ioutil"
@@ -11,14 +12,16 @@ import (
 	"time"
 )
 
-func watch(address string, icon string) error {
+func watch(address string, icon string, name string) error {
 	n, err := notifier.NewNotifier(icon)
 	if err != nil {
 		return err
 	}
 	defer n.Close()
 
-	err = n.AddNotifyIcon("notifier", "started", "listening for events")
+	err = n.AddNotifyIcon(name,
+		fmt.Sprintf("%s started.", name),
+		fmt.Sprintf("%s is listening for events.", name))
 	if err != nil {
 		return err
 	}
@@ -71,9 +74,14 @@ func main() {
 			Value: "icon.ico",
 			Usage: "notification icon path",
 		},
+		cli.StringFlag{
+			Name:  "name",
+			Usage: "tray icon name",
+			Value: "Notifier",
+		},
 	}
 	app.Action = func(c *cli.Context) error {
-		return watch(c.String("address"), c.String("icon"))
+		return watch(c.String("address"), c.String("icon"), c.String("bane"))
 	}
 
 	err := app.Run(os.Args)
