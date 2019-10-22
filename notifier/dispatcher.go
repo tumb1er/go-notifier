@@ -3,6 +3,7 @@ package notifier
 import (
 	"bufio"
 	"encoding/json"
+	"log"
 	"net"
 )
 
@@ -58,6 +59,7 @@ func (st SocketTransport) handleLine(s string, handler Handler) error {
 	if err := json.Unmarshal([]byte(s), &m); err != nil {
 		return err
 	}
+	log.Printf("%s: %s\n%s\n", m.Tooltip, m.Title, m.Info)
 	handler(m.Tooltip, m.Title, m.Info)
 	return nil
 }
