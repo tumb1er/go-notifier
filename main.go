@@ -64,17 +64,17 @@ func main() {
 	app.Usage = "listen for notifications"
 	app.HideVersion = true
 	app.Flags = []cli.Flag{
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "address",
 			Value: "localhost:9998",
 			Usage: "tcp address for socket server",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "icon",
 			Value: "icon.ico",
 			Usage: "notification icon path",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "name",
 			Usage: "tray icon name",
 			Value: "Notifier",

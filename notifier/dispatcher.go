@@ -51,6 +51,9 @@ func (st *SocketTransport) Observe(address string, handler Handler) error {
 
 func (st *SocketTransport) Stop() error {
 	st.running = false
+	if st.conn == nil {
+		return nil
+	}
 	return st.conn.Close()
 }
 
