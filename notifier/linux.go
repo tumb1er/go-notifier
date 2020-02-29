@@ -46,6 +46,7 @@ func (n *Notifier) SetIcon(icon string) error {
 	} else {
 		n.icon = path
 	}
+	return nil
 }
 
 // Update updates existing notification balloon with passed tooltip, title and description.
