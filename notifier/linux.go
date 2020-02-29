@@ -5,6 +5,7 @@ package notifier
 import (
 	"github.com/esiqveland/notify"
 	"github.com/godbus/dbus"
+	"os"
 	"path/filepath"
 )
 
@@ -16,10 +17,8 @@ type Notifier struct {
 
 // Init connects notifier to DBus session.
 func (n *Notifier) Init(icon string) error {
-	if path, err := filepath.Abs(icon); err != nil {
+	if err := n.SetIcon(icon); err != nil {
 		return err
-	} else {
-		n.icon = path
 	}
 	if conn, err := dbus.SessionBus(); err != nil {
 		return err
@@ -36,6 +35,17 @@ func (n *Notifier) Init(icon string) error {
 // AddNotifyIcon adds a notification balloon with passed tooltip, title and description.
 func (n *Notifier) AddNotifyIcon(tip, title, info string) error {
 	return n.Update(tip, title, info)
+}
+
+// SetIcon replaces an icon for next balloon.
+func (n *Notifier) SetIcon(icon string) error {
+	if path, err := filepath.Abs(icon); err != nil {
+		return err
+	} else if _, err := os.Stat(path); err != nil {
+		return err
+	} else {
+		n.icon = path
+	}
 }
 
 // Update updates existing notification balloon with passed tooltip, title and description.

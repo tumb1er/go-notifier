@@ -141,6 +141,15 @@ func (n *Notifier) loadIcon(icon string) (w32.HICON, error) {
 		LrDefaultSize|LrLoadFromFile)
 }
 
+// SetIcon replaces an icon for next balloon.
+func (n *Notifier) SetIcon(icon string) error {
+	if hicon, err := n.loadIcon(icon); err != nil {
+		return err
+	} else {
+		n.hicon = hicon
+		return nil
+	}
+}
 // AddNotifyIcon adds a notification balloon with passed tooltip, title and description.
 func (n *Notifier) AddNotifyIcon(tip, title, info string) error {
 	var flags uint32 = NifMessage | NifTip | NifIcon
