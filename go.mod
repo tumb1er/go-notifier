@@ -7,5 +7,5 @@ require (
 	github.com/esiqveland/notify v0.1.0
 	github.com/godbus/dbus v0.0.0-20181101234600-2ff6f7ffd60f
 	github.com/urfave/cli v1.22.2
-	golang.org/x/sys v0.0.0-20191120155948-bd437916bb0e
+	golang.org/x/sys v0.1.0
 )
